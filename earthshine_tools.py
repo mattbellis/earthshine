@@ -62,5 +62,15 @@ def neutrino_flux(energy):
 
     return ypts,xscaled,yscaled
 
+def time_dil(energy, mass):
+    # Let's use units of eV
+    # E --> eV
+    # p --> eV*c
+    # m --> eV*c^2
+    p = np.sqrt(energy**2 - mass**2)
+    beta = p/energy
+    gamma = 1/np.sqrt(1 - beta**2)
+    return beta, gamma
+
 
 
