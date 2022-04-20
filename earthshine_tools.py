@@ -74,3 +74,51 @@ def time_dil(energy, mass):
 
 
 
+#########################################################
+def my_beta(mass,ke):
+
+  etot = mass + ke
+  p = np.sqrt(etot**2 - mass**2)
+
+  beta = p/etot
+
+  return beta
+##########################################################
+
+###############################################################
+# We'll pass in the energy and mass in eV
+#
+# Everything else will be calculated in SI units, save for the
+# density
+###############################################################
+def bethe_formula(ke, mass, Z=10, A=18, rho=1):
+  
+  m_e = 9.1e-31   # kg
+  r_e = 2.8e-15 # meters
+  c = 3e8         # m/s
+  N_A = 6.022e23
+
+  A *= 0.001 # Convert the atomic weight to kg
+
+  z = 1     # electrons
+  echarge = 1.6e-19
+
+  # Let energy be in eV
+  beta = my_beta(mass,ke)
+  gamma = 1/np.sqrt(1-beta**2)
+  
+  I = 10 * Z * 1.6e-19
+
+  term1 = 4*np.pi*N_A*(r_e**2)*m_e*(c**2)*(Z/A)*(z**2/beta**2)
+
+  term2 = np.log((2*m_e*(c**2)*(beta**2)*(gamma**2))/I) - (beta**2)
+  
+  dedx = term1*term2
+  
+  dedx *= rho
+
+  # dedx is in Joules/m so let's convert it to eV/m
+  dedx /= 1.6e-19
+
+  return dedx
+##############################################################
