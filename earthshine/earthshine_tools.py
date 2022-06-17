@@ -122,3 +122,92 @@ def bethe_formula(ke, mass, Z=10, A=18, rho=1):
 
   return dedx
 ##############################################################
+
+def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
+
+  d = 0
+  ke = ke_i
+  ke_prev = ke_i
+  while ke>1e6 and d<distance_traveled:
+
+    dedx=bethe_formula(ke,mass=mass, Z=Z, A=A, rho=rho)
+    dedx *= step_size
+
+    ke_prev = ke
+    ke -= dedx
+
+    d += step_size
+
+    if ke<0:
+      ke = ke_prev
+      break
+  #print(ke_i/1e9, (ke/1e9))
+  return ke
+
+#################################################################
+def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
+
+  d = 0
+  ke = ke_i
+  ke_prev = ke_i
+  while ke>1e6 and d<distance_traveled:
+
+    dedx=bethe_formula(ke,mass=mass, Z=Z, A=A, rho=rho)
+    dedx *= step_size
+
+    ke_prev = ke
+    ke -= dedx
+
+    d += step_size
+
+    if ke<0:
+      ke = ke_prev
+      break
+  #print(ke_i/1e9, (ke/1e9))
+  return ke
+
+
+#################################################################
+def find_the_number(value_to_find,values):
+  # This algorithm will not return a valid number if the entry
+  # is in the last "1/2" of the lowest bin
+  # 
+  # For the energy purposes, this is OK because those muons are not
+  # going to be detected, at least for the energies we are simulating. 
+
+  nvalues=len(values)
+  width= values[1]-values[0]
+  #print(f"width of bins= {width}")
+
+  i = None
+  central = None
+
+  found_a_bin = False
+  for i in range(nvalues):
+    central=values[i]
+    lo=central-(width/2)
+    hi=central+(width/2)
+    #print("in find_the_number function")
+    #print(value_to_find, central, lo,hi)
+    
+    if value_to_find>lo and value_to_find<hi:
+      #print(i,central)
+      found_a_bin = True
+      break
+
+  idx = i
+  if found_a_bin is False:
+      idx = None
+
+  return idx, central
+
+
+#################################################################
+def solid_angle(length, width, radius):
+  term1=length*width
+  term2=np.sqrt((length**2+4*radius**2)*(width**2+4*radius**2))
+  term3=4*np.arcsin(term1/term2)
+  return term3
+
+
+
