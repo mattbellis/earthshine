@@ -131,7 +131,7 @@ plt.plot(en, tot)
 plt.yscale("log")
 plt.xlabel("energy")
 plt.ylabel("flux*cross section")
-plt.show()
+#plt.show()
 
 #print(en[-1])
 
@@ -184,11 +184,13 @@ N_CMS_month= N_at_CMS*3e7/12
 
 N_at_CMS_from_this_distance_tot= N_at_CMS_from_this_distance1+N_at_CMS_from_this_distance2
 
+plt.figure()
 plt.plot(energy, N_at_CMS_from_this_distance1, label=f"Distance= {distance1}")
 
 plt.plot(energy, N_at_CMS_from_this_distance2, label=f"Distance= {distance2}")
 plt.plot(energy, N_at_CMS_from_this_distance_tot, label="sum") 
 plt.xscale("log")
+plt.yscale("log")
 plt.legend()
 plt.xlabel("energy (eV)")
 plt.ylabel("Number at CMS")
