@@ -79,8 +79,8 @@ for distance in range(1,10,1):
     plt.xscale('log')
     plt.xlabel("energy")
     plt.ylabel("number")
-    plt.title("energy vs number at CMS (per second)")
-    plt.savefig("energy_vs_number_per_second")
+    #plt.title("energy vs number at CMS (per second)")
+    #plt.savefig("energy_vs_number_per_second")
     ##plt.yscale('log')
     #plt.legend()
 
@@ -105,8 +105,11 @@ plt.savefig("integrated_number per month.png")
 ################################################################################
 
 
+#ASK BELLIS!! I THINK I DID SOMETHING WRONG HERE 
+#Putting in vals for en restricts the energy range, not the radius, and we want to restrict the radius. So how do I fix that? 
+
 #plt.show()
-en=np.arange(1,201)
+en=np.arange(1,200)
 print(en)
 enlist=en.tolist()
 '''
@@ -119,19 +122,19 @@ plt.show()
 '''
 
 flux_new=etools.neutrino_flux(enlist)
-#fluxy=ypts
+#fluxy=ypts not needed right now
 xsec_new=etools.neutrino_cross_section(enlist)
 plt.figure()
 #print(ypts)
 #print(flux_new[0])
-tot= flux_new[0]*xsec_new[0]*density*en[-1]
+tot= flux_new[0]*xsec_new[0]#*density*en[-1]
 #print(tot)
 plt.plot(en, tot)
 #plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("energy")
 plt.ylabel("flux*cross section")
-plt.show()
+#plt.show()
 
 #print(en[-1])
 
@@ -187,14 +190,142 @@ N_at_CMS_from_this_distance_tot= N_at_CMS_from_this_distance1+N_at_CMS_from_this
 plt.plot(energy, N_at_CMS_from_this_distance1, label=f"Distance= {distance1}")
 
 plt.plot(energy, N_at_CMS_from_this_distance2, label=f"Distance= {distance2}")
-plt.plot(energy, N_at_CMS_from_this_distance_tot, label="sum") 
+plt.plot(energy, N_at_CMS_from_this_distance_tot,"g--", label="sum") 
 plt.xscale("log")
 plt.legend()
+plt.yscale("log")
+plt.xlabel("energy (eV)")
+plt.ylabel("Number at CMS")
+#plt.show()
+
+##########################################################################################
+
+
+
+################################################################################
+# Plot how the energy spectrum shifts
+################################################################################
+
+distance1= 100 
+
+N= density*length*y_flux_new*y_xsec_new
+Omega=etools.solid_angle(CMS_length, CMS_width/2, distance)
+N*=Omega
+hemisphere_area=2*np.pi*(distance**2)
+N*=hemisphere_area
+print(f"distance: {distance1}   Omega: {Omega}.   A_hemi: {hemisphere_area}")
+
+N_at_CMS_from_this_distance1=np.zeros(len(energy))
+
+for i,e in enumerate(energy):
+  ke_final=etools.energy_loss_per_distance_traveled(e*1e9, distance1, step_size=.1)
+  ke_final/=1e9
+  idx, central= etools.find_the_number(ke_final, energy)
+  if idx is not None:
+    N_at_CMS_from_this_distance1[idx]+= N[i]
+    #x1.append(N_at_CMS_from_this_distance1[idx])
+N_at_CMS+= N_at_CMS_from_this_distance1
+#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1}")
+plt.xscale("log")
+plt.legend()
+N_CMS_month= N_at_CMS*3e7/12
+
+
+plt.figure()
+plt.plot(energy, N_at_CMS_from_this_distance1, linewidth=4, label=f"After traversing {distance1} m")
+plt.plot(energy, N,"g--", linewidth=3, alpha=0.5, label="Original spectrum") 
+plt.title("How does the energy spectrum shift?")
+#plt.xscale("log")
+plt.legend()
+#plt.ylim(2e-15, 1e-9)
+plt.ylim(2e-13, 1e-9)
+plt.xlim(0,100)
+plt.yscale("log")
+plt.xlabel("energy (GeV)")
+plt.ylabel("Number at CMS")
+#plt.show()
+
+##########################################################################################
+'''
+distance1= 100 
+distance2=50
+distance3=10
+N= density*length*y_flux_new*y_xsec_new
+Omega=etools.solid_angle(CMS_length, CMS_width/2, distance)
+N*=Omega
+hemisphere_area=2*np.pi*(distance**2)
+N*=hemisphere_area
+print(f"distance: {distance1}   Omega: {Omega}.   A_hemi: {hemisphere_area}")
+
+N_at_CMS_from_this_distance1=np.zeros(len(energy))
+
+N_at_CMS_from_this_distance3=np.zeros(len(energy))
+N_at_CMS_from_this_distance2=np.zeros(len(energy))
+for i,e in enumerate(energy):
+  ke_final=etools.energy_loss_per_distance_traveled(e*1e9, distance1, step_size=.1)
+  ke_final/=1e9
+  idx, central= etools.find_the_number(ke_final, energy)
+  if idx is not None:
+    N_at_CMS_from_this_distance1[idx]+= N[i]
+    #x1.append(N_at_CMS_from_this_distance1[idx])
+N_at_CMS+= N_at_CMS_from_this_distance1
+#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1}")
+plt.xscale("log")
+plt.legend()
+N_CMS_month= N_at_CMS*3e7/12
+
+
+for i,e in enumerate(energy):
+  ke_final=etools.energy_loss_per_distance_traveled(e*1e9, distance2, step_size=.1)
+  ke_final/=1e9
+  idx, central= etools.find_the_number(ke_final, energy)
+  if idx is not None:
+    N_at_CMS_from_this_distance1[idx]+= N[i]
+    #x1.append(N_at_CMS_from_this_distance1[idx])
+N_at_CMS+= N_at_CMS_from_this_distance2
+#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1}")
+plt.xscale("log")
+plt.legend()
+N_CMS_month= N_at_CMS*3e7/12
+
+
+for i,e in enumerate(energy):
+  ke_final=etools.energy_loss_per_distance_traveled(e*1e9, distance3, step_size=.1)
+  ke_final/=1e9
+  idx, central= etools.find_the_number(ke_final, energy)
+  if idx is not None:
+    N_at_CMS_from_this_distance1[idx]+= N[i]
+    #x1.append(N_at_CMS_from_this_distance1[idx])
+N_at_CMS+= N_at_CMS_from_this_distance3
+#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1}")
+plt.xscale("log")
+plt.legend()
+N_CMS_month= N_at_CMS*3e7/12
+
+
+plt.figure()
+plt.plot(energy, N_at_CMS_from_this_distance1, linewidth=4, label=f"After traversing {distance1} m")
+
+plt.plot(energy, N_at_CMS_from_this_distance2, linewidth=4, label=f"After traversing {distance2} m")
+
+plt.plot(energy, N_at_CMS_from_this_distance3, linewidth=4, label=f"After traversing {distance3} m")
+plt.plot(energy, N,"g--", linewidth=3, alpha=0.5, label="Original spectrum") 
+plt.title("How does the energy spectrum shift?")
+#plt.xscale("log")
+plt.legend()
+#plt.ylim(2e-15, 1e-9)
+#plt.ylim(8e-15, 1e-9)
+#plt.xlim(0,100)
+plt.yscale("log")
 plt.xlabel("energy (eV)")
 plt.ylabel("Number at CMS")
 plt.show()
 
 ##########################################################################################
 
-
+'''
+ke=500e9
+for a in range(0,800,50):
+    x=etools.energy_loss_per_distance_traveled(ke,a)
+    print(f"particle travels {a} meters, has {x/1e9:.2f} GeV left")
 
