@@ -187,11 +187,13 @@ N_CMS_month= N_at_CMS*3e7/12
 
 N_at_CMS_from_this_distance_tot= N_at_CMS_from_this_distance1+N_at_CMS_from_this_distance2
 
+plt.figure()
 plt.plot(energy, N_at_CMS_from_this_distance1, label=f"Distance= {distance1}")
 
 plt.plot(energy, N_at_CMS_from_this_distance2, label=f"Distance= {distance2}")
 plt.plot(energy, N_at_CMS_from_this_distance_tot,"g--", label="sum") 
 plt.xscale("log")
+plt.yscale("log")
 plt.legend()
 plt.yscale("log")
 plt.xlabel("energy (eV)")
