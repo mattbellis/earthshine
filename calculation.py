@@ -77,8 +77,8 @@ for distance in range(1,10,1):
 
     plt.plot(energy,N_at_CMS_from_this_distance,label=f'distance={distance}')
     plt.xscale('log')
-    plt.xlabel("energy")
-    plt.ylabel("number")
+    plt.xlabel("energy",fontsize=14)
+    plt.ylabel("number",fontsize=14)
     #plt.title("energy vs number at CMS (per second)")
     #plt.savefig("energy_vs_number_per_second")
     ##plt.yscale('log')
@@ -132,8 +132,8 @@ tot= flux_new[0]*xsec_new[0]#*density*en[-1]
 plt.plot(en, tot)
 #plt.xscale("log")
 plt.yscale("log")
-plt.xlabel("energy")
-plt.ylabel("flux*cross section")
+plt.xlabel("energy",fontsize=14)
+plt.ylabel("flux*cross section",fontsize=14)
 #plt.show()
 
 #print(en[-1])
@@ -196,8 +196,8 @@ plt.xscale("log")
 plt.yscale("log")
 plt.legend()
 plt.yscale("log")
-plt.xlabel("energy (eV)")
-plt.ylabel("Number at CMS")
+plt.xlabel("energy (eV)",fontsize=14)
+plt.ylabel("Number at CMS", fontsize=14)
 #plt.show()
 
 ##########################################################################################
@@ -243,12 +243,12 @@ plt.legend()
 plt.ylim(2e-13, 1e-9)
 plt.xlim(0,100)
 plt.yscale("log")
-plt.xlabel("energy (GeV)")
-plt.ylabel("Number at CMS")
+plt.xlabel("energy (GeV)",fontsize=14)
+plt.ylabel("Number at CMS",fontsize=14)
 #plt.show()
 
 ##########################################################################################
-'''
+
 distance1= 100 
 distance2=50
 distance3=10
@@ -319,13 +319,13 @@ plt.legend()
 #plt.ylim(8e-15, 1e-9)
 #plt.xlim(0,100)
 plt.yscale("log")
-plt.xlabel("energy (eV)")
-plt.ylabel("Number at CMS")
+plt.xlabel("energy (eV)", fontsize=14)
+plt.ylabel("Number at CMS", fontsize=14)
 plt.show()
 
 ##########################################################################################
 
-'''
+
 ke=500e9
 for a in range(0,800,50):
     x=etools.energy_loss_per_distance_traveled(ke,a)
