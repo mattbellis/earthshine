@@ -13,3 +13,10 @@ cmsenv
 
 git clone https://github.com/mattbellis/earthshine.git
 ```
+
+
+# Finding cosmics datasets
+
+```
+dasgoclient --query="dataset=/*/*Cosmic*/*" --format plain 
+```
