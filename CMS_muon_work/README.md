@@ -13,3 +13,15 @@ cmsenv
 
 git clone https://github.com/mattbellis/earthshine.git
 ```
+
+# Upon logging in to lxplus
+
+```
+voms-proxy-init --rfc --voms cms
+
+cd CMSSW_10_2_0/src/earthshine/CMS_muon_work/
+
+cmsenv
+
+```
+
