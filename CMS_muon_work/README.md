@@ -25,3 +25,16 @@ cmsenv
 
 ```
 
+
+## Finding cosmics datasets
+
+```
+dasgoclient --query="dataset=/*/*Cosmic*/*" --format plain 
+```
+
+You can get a list of the actually ROOT files that are in one of these datasets
+doing something like the following.
+
+```
+dasgoclient --query="file dataset=/Cosmics/Run2017C-CosmicSP-PromptReco-v1/RAW-RECO" --format plain --limit 30
+```
