@@ -75,14 +75,14 @@ for distance in range(1,10,1):
     #print(N_at_CMS_from_this_distance)
     N_at_CMS += N_at_CMS_from_this_distance
 
-    plt.plot(energy,N_at_CMS_from_this_distance,label=f'distance={distance}')
+    plt.plot(energy,N_at_CMS_from_this_distance,label=f'distance={distance} m')
     plt.xscale('log')
     plt.xlabel("energy",fontsize=14)
     plt.ylabel("number",fontsize=14)
     #plt.title("energy vs number at CMS (per second)")
     #plt.savefig("energy_vs_number_per_second")
     ##plt.yscale('log')
-    #plt.legend()
+    plt.legend()
 
 
 
@@ -271,7 +271,7 @@ for i,e in enumerate(energy):
     N_at_CMS_from_this_distance1[idx]+= N[i]
     #x1.append(N_at_CMS_from_this_distance1[idx])
 N_at_CMS+= N_at_CMS_from_this_distance1
-#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1}")
+#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1} m")
 plt.xscale("log")
 plt.legend()
 N_CMS_month= N_at_CMS*3e7/12
@@ -285,7 +285,7 @@ for i,e in enumerate(energy):
     N_at_CMS_from_this_distance1[idx]+= N[i]
     #x1.append(N_at_CMS_from_this_distance1[idx])
 N_at_CMS+= N_at_CMS_from_this_distance2
-#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1}")
+#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1} m")
 plt.xscale("log")
 plt.legend()
 N_CMS_month= N_at_CMS*3e7/12
@@ -299,7 +299,7 @@ for i,e in enumerate(energy):
     N_at_CMS_from_this_distance1[idx]+= N[i]
     #x1.append(N_at_CMS_from_this_distance1[idx])
 N_at_CMS+= N_at_CMS_from_this_distance3
-#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1}")
+#plt.plot(energy, N_at_CMS_from_this_distance1, label=f"distance={distance1} m")
 plt.xscale("log")
 plt.legend()
 N_CMS_month= N_at_CMS*3e7/12
