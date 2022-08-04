@@ -1,5 +1,5 @@
-#echo "Staring step 1 --------------------------------------------"
-#time cmsRun UndergroundCosmicSPLooseMu_cfi_py_GEN_SIM.py
+echo "Staring step 1 --------------------------------------------"
+time cmsRun UndergroundCosmicSPLooseMu_cfi_py_GEN_SIM.py
 
 echo 
 
