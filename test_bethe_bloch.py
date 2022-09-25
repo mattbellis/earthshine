@@ -1,7 +1,7 @@
 import sys
 import matplotlib.pylab as plt
 import numpy as np
-import earthshine_tools as etools
+import earthshine as etools
 
 mass = 0.105e9 # Mass of muon in eV/c^2
 ke = 1e9 # units of eV, so 1e9 eV = 1 GeV
