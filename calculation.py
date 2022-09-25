@@ -240,8 +240,8 @@ plt.title("How does the energy spectrum shift?")
 #plt.xscale("log")
 plt.legend()
 #plt.ylim(2e-15, 1e-9)
-plt.ylim(2e-13, 1e-9)
-plt.xlim(0,100)
+#plt.ylim(2e-13, 1e-9)
+#plt.xlim(0,100)
 plt.yscale("log")
 plt.xlabel("energy (GeV)",fontsize=14)
 plt.ylabel("Number at CMS",fontsize=14)
@@ -304,20 +304,23 @@ plt.xscale("log")
 plt.legend()
 N_CMS_month= N_at_CMS*3e7/12
 
+#
+#
+#
+#
+#
+#
+
 
 plt.figure()
 plt.plot(energy, N_at_CMS_from_this_distance1, linewidth=4, label=f"After traversing {distance1} m")
-
-plt.plot(energy, N_at_CMS_from_this_distance2, linewidth=4, label=f"After traversing {distance2} m")
-
-plt.plot(energy, N_at_CMS_from_this_distance3, linewidth=4, label=f"After traversing {distance3} m")
 plt.plot(energy, N,"g--", linewidth=3, alpha=0.5, label="Original spectrum") 
 plt.title("How does the energy spectrum shift?")
 #plt.xscale("log")
 plt.legend()
-#plt.ylim(2e-15, 1e-9)
+plt.ylim(2e-15, 1e-9)
 #plt.ylim(8e-15, 1e-9)
-#plt.xlim(0,100)
+plt.xlim(0,100)
 plt.yscale("log")
 plt.xlabel("energy (eV)", fontsize=14)
 plt.ylabel("Number at CMS", fontsize=14)
