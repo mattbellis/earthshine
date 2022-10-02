@@ -9,7 +9,7 @@ infilename = sys.argv[1]
 f = ROOT.TFile(infilename)
 
 t = f.Get("Events")
-t.Print("*obal*")
+t.Print("*MuonDT*")
 #exit()
 
 nentries = t.GetEntries()
@@ -26,26 +26,14 @@ infilename = sys.argv[1]
 f = ROOT.TFile(infilename)
 
 t = f.Get("Events")
-t.Print("*osmic*")
+t.Print("*MuonDT*")
 #exit()
 
 nentries = t.GetEntries()
 
-# Stand alone
-sa_pt = []
-sa_eta = []
-sa_phi = []
-
-# Global
-global_pt = []
-global_eta = []
-global_phi = []
-
-# One leg
-
-oneleg_pt=[]
-oneleg_eta=[]
-oneleg_phi=[]
+x=[]
+y=[] 
+z=[]
 
 
 # Loop over events
