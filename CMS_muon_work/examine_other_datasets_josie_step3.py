@@ -4,41 +4,38 @@ import numpy as np
 
 import sys
 
+# This is the name of the input file
 infilename = sys.argv[1]
 
+# This opens the file and assigns it to variable f
 f = ROOT.TFile(infilename)
 
+# This gets a ROOT TTree called "Events"
 t = f.Get("Events")
-t.Print("*MuonDT*")
+
+# This prints all the TBranches that have "MuonDT" somewhere in the name
+#t.Print("*MuonDT*")
+#t.Print("*recoMuon*Cosmic*")
+t.Print("*recoMuon*")
 #exit()
 
+# How many entries are there? 
 nentries = t.GetEntries()
+print("nentries: {0}".format(nentries))
 
-
-
-#plt.show()
 
 #------------------------------------------------------
-
-
-infilename = sys.argv[1]
-
-f = ROOT.TFile(infilename)
-
-t = f.Get("Events")
-t.Print("*MuonDT*")
-#exit()
-
-nentries = t.GetEntries()
 
 x=[]
 y=[] 
 z=[]
+n = []
 
 
 # Loop over events
 for i in range(nentries):
 
+    # Get the i'th event and fill the tree from the file
     t.GetEvent(i)
 
     if i%100==0:
@@ -47,15 +44,23 @@ for i in range(nentries):
     if i>=100: 
         break 
 
-    muons = t.recoMuons_muonsFromCosmics__RECO
+    # This is where we get the name of a branch
+    # I usually find this name using TBrowser unless someone tells me 
+    # exactly what the name of the branch is that I have to look at. 
+    #muons = t.recoMuons_muonsFromCosmics__RECO
+    muons = t.recoMuons_muonsWitht0Correction__RECO
     mcount =0
+    
+    # This muons.product thing allows us to get the leaves 
     for muon in muons.product():
-        sa_pt.append(muon.pt())
-        sa_eta.append(muon.eta())
-        sa_phi.append(muon.phi())
+        x.append(muon.pt())
+        y.append(muon.eta())
+        z.append(muon.phi())
         mcount += 1
+    n.append(mcount)
     print("muonsFronCosmics: " + str(mcount))
 
+    '''
     muons = t.recoMuons_muonsFromCosmics1Leg__RECO
     mcount =0
     for muon in muons.product():
@@ -64,43 +69,30 @@ for i in range(nentries):
         oneleg_phi.append(muon.phi())
         mcount += 1
     print("muonsFronCosmics1Leg: " + str(mcount))
+    '''
+
+print(n)
 
 print("Ran over the entries...")
 plt.figure(figsize=(12,4))
 plt.subplot(1,3,1)
-plt.hist(sa_pt,bins=50,range=(0,300),histtype='step',fill=True)
+plt.hist(x,bins=50,range=(0,300),histtype='step',fill=True)
 plt.xlabel(r'p$_{T}$ [GeV/c]',fontsize=18)
 
 plt.subplot(1,3,2)
-plt.hist(sa_eta,bins=50,range=(-3.,3.),histtype='step',fill=True)
+plt.hist(y,bins=50,range=(-3.,3.),histtype='step',fill=True)
 plt.xlabel(r'$\eta$',fontsize=18)
 
 plt.subplot(1,3,3)
-plt.hist(sa_phi,bins=100,range=(-3.2, 3.2),histtype='step',fill=True)
+plt.hist(z,bins=100,range=(-3.2, 3.2),histtype='step',fill=True)
 plt.xlabel(r'$\phi$',fontsize=18)
 
 plt.tight_layout()
 
 plt.savefig('muonsFromCosmics.png')
 
-plt.figure(figsize=(12,4))
-plt.subplot(1,3,1)
-plt.hist(oneleg_pt,bins=50,range=(0,300),histtype='step',fill=True)
-plt.xlabel(r'p$_{T}$ [GeV/c]',fontsize=18)
-
-plt.subplot(1,3,2)
-plt.hist(oneleg_eta,bins=50,range=(-3.,3.),histtype='step',fill=True)
-plt.xlabel(r'$\eta$',fontsize=18)
-
-plt.subplot(1,3,3)
-plt.hist(oneleg_phi,bins=100,range=(-3.2, 3.2),histtype='step',fill=True)
-plt.xlabel(r'$\phi$',fontsize=18)
-
-plt.tight_layout()
-
-plt.savefig('muonsFromCosmics1Leg.png')
-
-
+'''
 plt.show()
+'''
 
 
