@@ -31,6 +31,17 @@ y=[]
 z=[]
 n = []
 
+RPCx=[]
+RPCy=[]
+RPCz=[]
+RPCn=[]
+RPCt=[]
+
+CSCx=[]
+CSCy=[]
+CSCz=[]
+CSCn=[]
+CSCt=[]
 
 # Loop over events
 for i in range(nentries):
@@ -59,7 +70,43 @@ for i in range(nentries):
     n.append(mcount)
     print("var: " + str(mcount))
 
-np.save('output_step1.npy',np.array([x,y,z,n]))
+#####################################################
+    # This is where we get the name of a branch
+    # I usually find this name using TBrowser unless someone tells me 
+    # exactly what the name of the branch is that I have to look at. 
+    vars = t.PSimHits_g4SimHits_MuonCSCHits_SIM.product()
+    mcount =0
+    
+    # This vars.product thing allows us to get the leaves 
+    for var in vars:
+        CSCx.append(var.localPosition().x())
+        CSCy.append(var.localPosition().y())
+        CSCz.append(var.localPosition().z())
+        mcount += 1
+    CSCn.append(mcount)
+    print("var: " + str(mcount))
+
+
+
+
+
+    # This is where we get the name of a branch
+    # I usually find this name using TBrowser unless someone tells me 
+    # exactly what the name of the branch is that I have to look at. 
+    vars = t.PSimHits_g4SimHits_MuonRPCHits_SIM.product()
+    mcount =0
+    
+    # This vars.product thing allows us to get the leaves 
+    for var in vars:
+        RPCx.append(var.localPosition().x())
+        RPCy.append(var.localPosition().y())
+        RPCz.append(var.localPosition().z())
+        mcount += 1
+    RPCn.append(mcount)
+    print("var: " + str(mcount))
+#Finished looping over the file
+#Time to write the file !
+np.save('output_step1.npy',np.array([x,y,z,n,RPCx,RPCy,RPCz,RPCn,CSCx,CSCy,CSCz,CSCn]))
 
 print(n)
 
