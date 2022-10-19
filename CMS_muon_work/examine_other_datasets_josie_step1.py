@@ -26,22 +26,26 @@ print("nentries: {0}".format(nentries))
 
 #------------------------------------------------------
 
-x=[]
-y=[] 
-z=[]
-n = []
+DTx=[]
+DTy=[] 
+DTz=[]
+DTn = []
+DTt = []
+DTdedx = []
 
 RPCx=[]
 RPCy=[]
 RPCz=[]
 RPCn=[]
 RPCt=[]
+RPCdedx=[]
 
 CSCx=[]
 CSCy=[]
 CSCz=[]
 CSCn=[]
 CSCt=[]
+CSCdedx=[]
 
 # Loop over events
 for i in range(nentries):
@@ -52,7 +56,7 @@ for i in range(nentries):
     if i%100==0:
         print(str(i) + " out of " + str(nentries))
 
-    if i>=100: 
+    if i>=1000: 
         break 
 
     # This is where we get the name of a branch
@@ -63,11 +67,13 @@ for i in range(nentries):
     
     # This vars.product thing allows us to get the leaves 
     for var in vars:
-        x.append(var.localPosition().x())
-        y.append(var.localPosition().y())
-        z.append(var.localPosition().z())
+        DTx.append(var.localPosition().x())
+        DTy.append(var.localPosition().y())
+        DTz.append(var.localPosition().z())
+        DTt.append(var.tof())
+        DTdedx.append(var.energyLoss())
         mcount += 1
-    n.append(mcount)
+    DTn.append(mcount)
     print("var: " + str(mcount))
 
 #####################################################
@@ -82,6 +88,8 @@ for i in range(nentries):
         CSCx.append(var.localPosition().x())
         CSCy.append(var.localPosition().y())
         CSCz.append(var.localPosition().z())
+        CSCt.append(var.tof())
+        CSCdedx.append(var.energyLoss())
         mcount += 1
     CSCn.append(mcount)
     print("var: " + str(mcount))
@@ -101,14 +109,16 @@ for i in range(nentries):
         RPCx.append(var.localPosition().x())
         RPCy.append(var.localPosition().y())
         RPCz.append(var.localPosition().z())
+        RPCt.append(var.tof())
+        RPCdedx.append(var.energyLoss())
         mcount += 1
     RPCn.append(mcount)
     print("var: " + str(mcount))
 #Finished looping over the file
 #Time to write the file !
-np.save('output_step1.npy',np.array([x,y,z,n,RPCx,RPCy,RPCz,RPCn,CSCx,CSCy,CSCz,CSCn]))
+np.save('output_step1.npy',np.array([DTx,DTy,DTz,DTn,DTt,DTdedx,RPCx,RPCy,RPCz,RPCn,RPCt,RPCdedx,CSCx,CSCy,CSCz,CSCn,CSCt,CSCdedx]))
 
-print(n)
+#print(n)
 
 print("Ran over the entries...")
 '''
