@@ -61,3 +61,22 @@ edmDumpEventContent root://eoscms.cern.ch//eos/cms/store/data/Run2015D/SingleMuo
 You can then look in the file (with `vi` for example) and see what type of data is in there that you might want to explore. 
 
 It doesn't always tell you if those entries have momentum information (e.g. `phi`), but eventually we'll learn that. 
+
+
+
+
+# Docker
+Does this work?
+```
+docker run --name mycmssw --rm -it --net=host --env="DISPLAY" -v $HOME/.Xauthority:/home/cmsusr/.Xauthority:rw  cmscloud/standalone:cmssw_10_6_25-slc7_amd64_gcc700 /bin/bash
+```
+
+Adding this gave issues
+```
+-v ${HOME}/earthshine/CMS_muon_work:/home/cmsusr/CMSSW_10_6_25/src/earthshine
+```
+
+This might work!
+```
+docker run --name mycmssw --rm -it --net=host --env="DISPLAY" -v $HOME/.Xauthority:/home/cmsusr/.Xauthority:rw -v ${HOME}/earthshine/CMS_muon_work:/code  cmscloud/standalone:cmssw_10_6_25-slc7_amd64_gcc700 /bin/bash
+```
