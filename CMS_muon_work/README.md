@@ -66,17 +66,14 @@ It doesn't always tell you if those entries have momentum information (e.g. `phi
 
 
 # Docker
-Does this work?
+
+First do
 ```
-docker run --name mycmssw --rm -it --net=host --env="DISPLAY" -v $HOME/.Xauthority:/home/cmsusr/.Xauthority:rw  cmscloud/standalone:cmssw_10_6_25-slc7_amd64_gcc700 /bin/bash
+xhost local:root
 ```
 
-Adding this gave issues
-```
--v ${HOME}/earthshine/CMS_muon_work:/home/cmsusr/CMSSW_10_6_25/src/earthshine
-```
+Then do the following to go into the docker environment. 
 
-This might work!
 ```
 docker run --name mycmssw --rm -it --net=host --env="DISPLAY" -v $HOME/.Xauthority:/home/cmsusr/.Xauthority:rw -v ${HOME}/earthshine/CMS_muon_work:/code  cmscloud/standalone:cmssw_10_6_25-slc7_amd64_gcc700 /bin/bash
 ```
