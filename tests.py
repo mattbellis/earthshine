@@ -1,4 +1,4 @@
-import earthshine_tools as etools 
+import earthshine as etools 
 
 import matplotlib.pylab as plt
 import numpy as np
