@@ -26,6 +26,9 @@ setup(
     license='MIT',
     packages = ['earthshine'],
     install_requires = ['numpy','scipy', 'matplotlib'],
+    # To import the data
+    include_package_data=True,
+    #package_dir={"": "source"},
     #tests_require = ['pytest', 'pytest-cov'],
     classifiers=[ # HAVE TO FIX ALL THIS
         'Development Status :: 5 - Production/Stable',
