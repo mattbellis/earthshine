@@ -1,5 +1,5 @@
 [build-system]
-requires = ["pip>=20.3", "setuptools>=61.0", 'numpy', 'scipy']
+requires = ["pip>=20.3", "setuptools==60", 'numpy', 'scipy']
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -10,7 +10,7 @@ authors = [
 ]
 description = "Tools relevant for searches for upward-going muons."
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
