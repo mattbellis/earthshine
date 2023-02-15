@@ -1,13 +1,18 @@
 import matplotlib.pylab as plt
 import numpy as np
 
+import importlib.resources as pkg_resources
+
 # Something new!
 from scipy.interpolate import interp1d
 
 
 def neutrino_cross_section(energy):
 
-    data=np.loadtxt("cross_section.csv",dtype=float,delimiter=",",unpack=True)
+    # Need this to read the proper file
+    data_path = pkg_resources.files('earthshine').joinpath('cross_section.csv')
+
+    data=np.loadtxt(data_path,dtype=float,delimiter=",",unpack=True)
     x=data[1]
     y=data[0]*1e-38
 
@@ -34,14 +39,17 @@ def neutrino_cross_section(energy):
 
 def neutrino_flux(energy):
 
-    data = np.loadtxt("flux_curve.csv", dtype= float,delimiter=",", unpack=True)
+    # Need this to read the proper file
+    data_path = pkg_resources.files('earthshine').joinpath('flux_curve.csv')
+
+    data = np.loadtxt(data_path, dtype= float,delimiter=",", unpack=True)
 
     x = data[0] 
     y = data[1]
 
-    print
-    print(x)
-    print(y)
+    #print
+    #print(x)
+    #print(y)
 
     xscaled = 10**x # Plot has data on a log scale
     yscaled = (y* 1e-9) #For scaling when I digitized the curve
