@@ -28,7 +28,8 @@ include-package-data = True
 
 [tool.setuptools.packages.find]
 # This is instead of `src` I think
-where = ["earthshine"]
+where = ["src"]
+include = ["earthshine"]
 
 [tool.setuptools.package-data]
 mypkg = ["*.csv"]
