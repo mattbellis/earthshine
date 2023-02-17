@@ -24,7 +24,7 @@ classifiers = [
 # ...
 # By default, include-package-data is true in pyproject.toml, so you do
 # NOT have to specify this line.
-include-package-data = true
+include-package-data = True
 
 [tool.setuptools.packages.find]
 # This is instead of `src` I think
