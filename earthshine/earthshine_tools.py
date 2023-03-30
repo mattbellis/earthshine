@@ -10,7 +10,8 @@ from scipy.interpolate import interp1d
 def neutrino_cross_section(energy):
 
     # Need this to read the proper file
-    data_path = pkg_resources.files('earthshine').joinpath('cross_section.csv')
+    #data_path = pkg_resources.files('earthshine').joinpath('cross_section.csv')
+    data_path = 'cross_section.csv'
 
     data=np.loadtxt(data_path,dtype=float,delimiter=",",unpack=True)
     x=data[1]
@@ -40,7 +41,8 @@ def neutrino_cross_section(energy):
 def neutrino_flux(energy):
 
     # Need this to read the proper file
-    data_path = pkg_resources.files('earthshine').joinpath('flux_curve.csv')
+    #data_path = pkg_resources.files('earthshine').joinpath('flux_curve.csv')
+    data_path = 'flux_curve.csv'
 
     data = np.loadtxt(data_path, dtype= float,delimiter=",", unpack=True)
 
