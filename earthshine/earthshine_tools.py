@@ -85,6 +85,14 @@ def time_dil(energy, mass):
 
 
 #########################################################
+def ke_from_p_and_mass(p,mass):
+
+    energy = np.sqrt(p**2 + mass**2)
+    ke = energy - mass
+
+    return ke
+#########################################################
+#########################################################
 def my_beta(mass,ke):
 
   etot = mass + ke
@@ -101,17 +109,27 @@ def my_beta(mass,ke):
 # Everything else will be calculated in SI units, save for the
 # density
 ###############################################################
-def bethe_formula(ke, mass, Z=10, A=18, rho=1):
+# ke is the mass of the incoming particle and is in units of eV
+# mass is the mass of the incoming particle and is in units of eV/c^2
+# Z is unitless and is the atomic number for the material
+# A is unitless and is the atomic mass for the material
+# rho is the density of the material and is in kg/m^3
+# z is the charge (in units of e) of the incoming particle
+#
+# This will return eV / m
+#
+def bethe_formula(ke, mass, Z=10, A=18, rho=1, z=1):
   
-  m_e = 9.1e-31   # kg
-  r_e = 2.8e-15 # meters
-  c = 3e8         # m/s
-  N_A = 6.022e23
+  m_e = 9.1e-31   # kg, mass of electrom
+  r_e = 2.8e-15 # meters, classical electron radius
+  c = 3e8         # m/s, speed of light
+  N_A = 6.022e23  # Avogadro's number
 
-  A *= 0.001 # Convert the atomic weight to kg
+  A *= 0.001 # Avogadro's number tells us the number of grams of a mole
+             # of a substance, but we are working with kg, so we want to 
+             # convert the atomic weight to kg
 
-  z = 1     # electrons
-  echarge = 1.6e-19
+  echarge = 1.6e-19 # Charge on the electron in units of Coloumbs
 
   # Let energy be in eV
   beta = my_beta(mass,ke)
@@ -125,6 +143,8 @@ def bethe_formula(ke, mass, Z=10, A=18, rho=1):
   
   dedx = term1*term2
   
+  # Multiply by density to get dEdX in units of 
+  # J / m)
   dedx *= rho
 
   # dedx is in Joules/m so let's convert it to eV/m
@@ -132,8 +152,11 @@ def bethe_formula(ke, mass, Z=10, A=18, rho=1):
 
   return dedx
 ##############################################################
+# 
+#def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
+def final_energy_after_distance_traveled(p, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
 
-def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
+  ke = ke_from_p_and_mass(p,mass)
 
   d = 0
   ke = ke_i
@@ -155,6 +178,7 @@ def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, m
   return ke
 
 #################################################################
+'''
 def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
 
   d = 0
@@ -176,6 +200,7 @@ def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, m
   #print(ke_i/1e9, (ke/1e9))
   return ke
 
+'''
 
 #################################################################
 def find_the_number(value_to_find,values):
