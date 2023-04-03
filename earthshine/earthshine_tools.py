@@ -156,7 +156,7 @@ def bethe_formula(ke, mass, Z=10, A=18, rho=1, z=1):
 #def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
 def final_energy_after_distance_traveled(p, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
 
-  ke = ke_from_p_and_mass(p,mass)
+  ke_i = ke_from_p_and_mass(p,mass)
 
   d = 0
   ke = ke_i
