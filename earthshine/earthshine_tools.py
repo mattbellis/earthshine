@@ -85,6 +85,14 @@ def time_dil(energy, mass):
 
 
 #########################################################
+def p_from_ke_and_mass(ke,mass):
+
+    energy = ke + mass
+    p = np.sqrt(energy**2 - mass**2)
+
+    return p
+#########################################################
+#########################################################
 def ke_from_p_and_mass(p,mass):
 
     energy = np.sqrt(p**2 + mass**2)
