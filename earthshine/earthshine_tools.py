@@ -247,8 +247,9 @@ def find_the_number(value_to_find,values):
 
 #################################################################
 def solid_angle(length, width, radius):
+  # https://math.stackexchange.com/questions/1244429/how-to-calculate-solid-angle-of-a-rectangular-detector-of-20cm-x-10cm
   term1=length*width
-  term2=np.sqrt((length**2+4*radius**2)*(width**2+4*radius**2))
+  term2=np.sqrt(((length**2)+(4*(radius**2)))*((width**2)+(4*(radius**2))))
   term3=4*np.arcsin(term1/term2)
   return term3
 
