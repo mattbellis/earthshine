@@ -162,28 +162,79 @@ def bethe_formula(ke, mass, Z=10, A=18, rho=1, z=1):
 ##############################################################
 # 
 #def energy_loss_per_distance_traveled(ke_i, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
-def final_energy_after_distance_traveled(p, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000):
+def final_energy_after_distance_traveled(p, distance_traveled, step_size=0.01, mass=105e6, Z=30, A=60, rho=2000, IS_E=True, ADAPTIVE_STEPSIZE=False, cutoffs=None):
 
-  ke_i = ke_from_p_and_mass(p,mass)
+    # IS_E is True if the p variable is actually kinetic energy rather then momentum
 
-  d = 0
-  ke = ke_i
-  ke_prev = ke_i
-  while ke>1e6 and d<distance_traveled:
+    ke_i = None
+    if IS_E:
+        ke_i = p
+    else:
+        # Convert p and mass to ke
+        ke_i = ke_from_p_and_mass(p,mass)
 
-    dedx=bethe_formula(ke,mass=mass, Z=Z, A=A, rho=rho)
-    dedx *= step_size
+    # Check to see if the distance is so far that we don't need to do any calculations
+    if cutoffs is not None:
+        for energy_threshold,distance_threshold in cutoffs.items():
+            #print(energy_threshold,distance_threshold)
+            if ke_i<energy_threshold*1e9 and distance_traveled>=distance_threshold:
+                print(f"cutoff! ke_i: {ke_i}     energy_threshold: {energy_threshold}     distance_threshold: {distance_threshold}")
+                return 0
+            #if ke_i>energy_threshold and distance_traveled<distance_threshold:
+        
 
-    ke_prev = ke
-    ke -= dedx
+    d = 0
+    ke = ke_i
+    ke_prev = ke_i
 
-    d += step_size
+    # See if we can do it all in one step
+    if (ADAPTIVE_STEPSIZE is False) and (distance_traveled == step_size):
 
-    if ke<0:
-      ke = ke_prev
-      break
-  #print(ke_i/1e9, (ke/1e9))
-  return ke
+        dedx=bethe_formula(ke,mass=mass, Z=Z, A=A, rho=rho)
+        dedx *= step_size
+
+        ke_prev = ke
+        ke -= dedx
+
+        # If we get a negative value, then go to the adaptive steps
+        if ke<0:
+            ke = ke_i
+            ADAPTIVE_STEPSIZE = True
+        else:
+            return ke
+
+
+    #print(d,distance_traveled)
+
+    while ke>1e6 and d<=distance_traveled:
+        #print(f'd: {d}')
+        
+        if ADAPTIVE_STEPSIZE:
+
+            #print(f"AS:   ke: {ke}    step_size: {step_size}")
+            if ke>10e9:
+                step_size=1.
+            elif ke<=10e9 and ke>1e9:
+                step_size=0.1
+            elif ke<=1e9:
+                step_size=0.01
+
+        dedx=bethe_formula(ke,mass=mass, Z=Z, A=A, rho=rho)
+        dedx *= step_size
+  
+        ke_prev = ke
+        ke -= dedx
+  
+        d += step_size
+
+        #print(f"dedx: {dedx}      ke: {ke}   new d: {d}")
+  
+        if ke<0:
+            #ke = ke_prev
+            ke = 0
+            break
+    #print(ke_i/1e9, (ke/1e9))
+    return ke
 
 #################################################################
 '''
@@ -244,6 +295,17 @@ def find_the_number(value_to_find,values):
 
   return idx, central
 
+#################################################################
+def sum_up_shifted_energies(energies, frequencies, energy_range=None, nbins=None):
+
+    h,bin_edges = np.histogram(energies,range=energy_range,bins=nbins, weights=frequencies)
+
+    bin_width = bin_edges[1] - bin_edges[0]
+
+    new_energies_total = bin_edges[0:-1]+bin_width/2
+    new_frequencies_total = h
+
+    return new_energies_total, new_frequencies_total
 
 #################################################################
 def solid_angle(length, width, radius):
