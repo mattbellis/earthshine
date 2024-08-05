@@ -1,0 +1,26 @@
+./configure \
+             --prefix=/usr/local \
+             --disable-profiler \
+             --disable-validation-tools \
+             --disable-cernlib \
+             --enable-lhapdf \
+             --enable-flux-drivers \
+             --enable-geom-drivers \
+             --disable-doxygen \
+             --enable-test \
+             --enable-mueloss \
+             --enable-dylibversion \
+             --enable-t2k \
+             --enable-fnal \
+             --enable-atmo \
+             --enable-nucleon-decay \
+             --disable-masterclass \
+             --disable-debug \
+             --with-optimiz-level=O2 \
+             --with-pythia6-lib=/full/path/to/my/libPythia6/ \
+             --with-lhapdf-inc=/full/path/to/my/lhapdf/includes/ \
+             --with-lhapdf-lib=/full/path/to/my/lhapdf/library/ \
+             --with-libxml2-inc=/full/path/to/my/libml2/includes/ \
+             --with-libxml2-lib=/full/path/to/my/libxml2/library/ \
+             --with-log4cpp-inc=/full/path/to/my/log4cpp/includes/ \
+             --with-log4cpp-lib=/full/path/to/my/log4cpp/library/ \
