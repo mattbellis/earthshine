@@ -15,12 +15,13 @@
              --enable-nucleon-decay \
              --disable-masterclass \
              --disable-debug \
+             --disable-lhapdf5 \
              --with-optimiz-level=O2 \
              --with-pythia6-lib=/home/bellis/v6_428/lib/ \
              --with-libxml2-inc=/usr/include/libxml2 \
              --with-libxml2-lib=/usr/lib/x86_64-linux-gnu/ \
              --with-log4cpp-inc=/usr/include \
-             --with-log4cpp-lib=/usr/lib/x86_64-linux-gnu \
-             --disable-lhapdf5 \
-             #--with-lhapdf-lib=/usr/local/lib/ \
-             #--with-lhapdf-inc=/usr/local/include/LHAPDF \
+             --with-log4cpp-lib=/usr/lib/x86_64-linux-gnu/ \
+             --enable-lhapdf6 \
+             --with-lhapdf6-lib=/usr/local/lib/ \
+             --with-lhapdf6-inc=/usr/local/include

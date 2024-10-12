@@ -6,8 +6,8 @@ gmkspl -p 14 \
 --output-cross-sections xsec_muon_neutrino_target_ROCK_ELEMENTS.xml
 
 
-$for target in 1000080160 1000140280 1000130270 1000260560 1000200400 1000110230 1000190390 1000120240
-$do
+#$for target in 1000080160 1000140280 1000130270 1000260560 1000200400 1000110230 1000190390 1000120240
+#$do
     #echo gmkspl -p 14 \
     #       -t $target \
     #       -n 100 \
