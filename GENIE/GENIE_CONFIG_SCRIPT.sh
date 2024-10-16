@@ -2,6 +2,8 @@
 export GENIE=/home/bellis/Generator
 export ROOTSYS=/home/bellis/root_install
 export LHAPATH=/home/bellis/LHAPDF-6.5.4
+export LHAPDF6_INC=/usr/local/lib/
+export LHAPDF6_LIB=/usr/local/include/LHAPDF/
 export PATH=$PATH:\
 $ROOTSYS/bin:\
 $GENIE/bin
