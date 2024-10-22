@@ -24,4 +24,7 @@
              --with-log4cpp-lib=/usr/lib/x86_64-linux-gnu/ \
              --enable-lhapdf6 \
              --with-lhapdf6-lib=/usr/local/lib/ \
-             --with-lhapdf6-inc=/usr/local/include
+             --with-lhapdf6-inc=/usr/local/include \
+             --enable-hepmc3-interface \
+             --with-hepmc3-lib=/home/bellis/hepmc3-install/lib \
+             --with-hepmc3-inc=/home/bellis/hepmc3-install/include
