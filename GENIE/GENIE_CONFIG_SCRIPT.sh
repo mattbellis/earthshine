@@ -10,5 +10,6 @@ $GENIE/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:\
 /home/bellis/LHAPDF-6.5.4/:\
 /home/bellis/v6_428/lib:\
+/home/bellis/hepmc3-install/lib:\
 $ROOTSYS/lib:\
 $GENIE/lib
