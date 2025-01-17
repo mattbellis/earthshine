@@ -1,5 +1,5 @@
 #!/bin/bash
-export GENIE=/home/bellis/Generator
+export GENIE=/home/bellis/Generator_MAIN
 export ROOTSYS=/home/bellis/root_install
 export LHAPATH=/home/bellis/LHAPDF-6.5.4
 export LHAPDF6_INC=/usr/local/lib/
