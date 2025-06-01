@@ -1,0 +1,30 @@
+./configure \
+             --prefix=/usr/local/ \
+             --disable-profiler \
+             --disable-validation-tools \
+             --disable-cernlib \
+             --enable-flux-drivers \
+             --enable-geom-drivers \
+             --disable-doxygen \
+             --enable-test \
+             --enable-mueloss \
+             --enable-dylibversion \
+             --enable-t2k \
+             --enable-fnal \
+             --enable-atmo \
+             --enable-nucleon-decay \
+             --disable-masterclass \
+             --disable-debug \
+             --disable-lhapdf5 \
+             --with-optimiz-level=O2 \
+             --with-pythia6-lib=/home/bellis/v6_428/lib/ \
+             --with-libxml2-inc=/usr/include/libxml2 \
+             --with-libxml2-lib=/usr/lib/x86_64-linux-gnu/ \
+             --with-log4cpp-inc=/usr/include \
+             --with-log4cpp-lib=/usr/lib/x86_64-linux-gnu/ \
+             --enable-lhapdf6 \
+             --with-lhapdf6-lib=/usr/local/lib/ \
+             --with-lhapdf6-inc=/usr/local/include \
+             --enable-hepmc3-interface \
+             --with-hepmc3-lib=/home/bellis/hepmc3-install/lib \
+             --with-hepmc3-inc=/home/bellis/hepmc3-install/include
