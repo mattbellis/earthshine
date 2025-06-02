@@ -77,6 +77,100 @@ def distance(v1, v2):
   d = np.sqrt(dx**2 + dy**2 + dz**2)
   return d
 
+################################################################################
+import numpy as np
+
+def energy_loss(E0, particle, material, distance_cm=None):
+    """
+    Vectorized version. E0 can be a float or a numpy array of energies in GeV.
+
+    Parameters:
+    - E0: float or np.ndarray, initial energy in GeV
+    - particle: 'muon', 'pion', or 'kaon'
+    - material: one of 'rock', 'copper', 'lead', 'water', 'aluminum', 'iron', 'carbon', 'ice'
+    - distance_cm: optional float. If None, return range in cm; else return final energy in GeV
+
+    Returns:
+    - If distance_cm is None: range(s) in cm
+    - If distance_cm is provided: final energy/energies in GeV
+    """
+    particle = particle.lower()
+    material = material.lower()
+    E0 = np.asarray(E0)  # support scalar or array
+
+    material_db = {
+        "rock":     {"rho": 2.65,  "a_mu": 2.0e-3, "b_mu": 4.0e-6,  "lambda_pi": 120, "lambda_K": 160},
+        "copper":   {"rho": 8.96,  "a_mu": 1.75e-3, "b_mu": 1.4e-5, "lambda_pi": 106, "lambda_K": 130},
+        "lead":     {"rho": 11.34, "a_mu": 1.5e-3, "b_mu": 5.4e-5, "lambda_pi": 106, "lambda_K": 130},
+        "water":    {"rho": 1.0,   "a_mu": 2.0e-3, "b_mu": 3.0e-6,  "lambda_pi": 120, "lambda_K": 160},
+        "aluminum": {"rho": 2.7,   "a_mu": 1.9e-3, "b_mu": 6.5e-6,  "lambda_pi": 118, "lambda_K": 155},
+        "iron":     {"rho": 7.87,  "a_mu": 1.75e-3, "b_mu": 1.7e-5, "lambda_pi": 109, "lambda_K": 135},
+        "carbon":   {"rho": 2.267, "a_mu": 1.9e-3, "b_mu": 0.9e-6,  "lambda_pi": 120, "lambda_K": 160},
+        "ice":      {"rho": 0.917, "a_mu": 2.0e-3, "b_mu": 3.0e-6,  "lambda_pi": 120, "lambda_K": 160},
+    }
+
+    if material not in material_db:
+        raise ValueError(f"Unsupported material '{material}'.")
+
+    mat = material_db[material]
+    rho = mat["rho"]
+
+    if particle == "muon":
+        a_cm = mat["a_mu"] * rho
+        b_cm = mat["b_mu"] * rho
+
+        if distance_cm is None:
+            if b_cm > 0:
+                return (1 / b_cm) * np.log(1 + (b_cm * E0 / a_cm)), rho
+            else:
+                return E0 / a_cm, rho
+        else:
+            if b_cm > 0:
+                epsilon = a_cm / b_cm
+                return np.maximum((E0 + epsilon) * np.exp(-b_cm * distance_cm) - epsilon, 0), rho
+            else:
+                return np.maximum(E0 - a_cm * distance_cm, 0), rho
+
+    elif particle in ["pion", "kaon"]:
+        a_ion = 2.0e-3
+        dEdx_ion = a_ion * rho
+        f = 0.6
+        lambda_gcm2 = mat["lambda_pi"] if particle == "pion" else mat["lambda_K"]
+        lambda_cm = lambda_gcm2 / rho
+
+        def simulate_range_or_final_energy(E_start):
+            E = E_start
+            x = 0
+            dist_since_int = 0
+            step = 1  # cm
+            if distance_cm is None:
+                while E > 0:
+                    E -= dEdx_ion * step
+                    dist_since_int += step
+                    x += step
+                    if dist_since_int >= lambda_cm:
+                        E *= f
+                        dist_since_int = 0
+                #print("HERE", x, rho, type(x), type(rho))
+                return x, rho
+            else:
+                while x < distance_cm and E > 0:
+                    E -= dEdx_ion * step
+                    dist_since_int += step
+                    x += step
+                    if dist_since_int >= lambda_cm:
+                        E *= f
+                        dist_since_int = 0
+                #print('THERE', max(E,0), rho)
+                return max(E, 0), rho
+
+        # Vectorize the above simulation for numpy arrays
+        return np.vectorize(simulate_range_or_final_energy)(E0)#, rho
+
+    else:
+        raise ValueError("Unsupported particle. Choose 'muon', 'pion', or 'kaon'.")
+
+################################################################################
 ##################################################################
 
 def generate_dm_decays(MASS_A=[.250,1,5], DM_MASSES=[10,100,1000], nevents_to_generate=10):
