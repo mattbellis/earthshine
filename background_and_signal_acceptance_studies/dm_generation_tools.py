@@ -459,6 +459,10 @@ def throw_muons_at_CMS(df_input, ndecays=None, MAKE_PLOTS=False):
 
 ################################################################################
 
+# Got this code from ChatGPT and verified the output with the skspatial tools.
+# 
+# This code runs much faster though because I believe it is specialized for this
+# purpose while the skspatial tools seem to be more generalized. 
 def intersect_finite_cylinder_x_np(origins, directions,
                                    radius=7.5, half_len=10.5, eps=1e-12):
     """
